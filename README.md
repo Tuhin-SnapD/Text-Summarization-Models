@@ -1,6 +1,8 @@
 # Text-Summarization-Models
 
-This repository contains various text summarization models implemented in Python. Text summarization is the process of generating a concise and meaningful summary of a longer text while preserving its key information. This can be useful for a variety of applications, such as news article summarization, document summarization, and summarization of social media posts.
+This repository contains Python implementations of various text summarization models. Text summarization is the process of generating a shorter version of a longer text while preserving its most important information. It has many practical applications, such as summarizing news articles or academic papers, and can be used to save time and improve comprehension.
+
+
 
 ## Usage
 
@@ -11,6 +13,9 @@ The repository contains several different text summarization models, including:
   `LSA (Latent Semantic Analysis)`
   `Luhn Algorithm`
 Each of these models has its own Python module containing the necessary code to run the model.
+
+## Evaluation
+To evaluate the performance of the models, we have used the ROUGE metric (Recall-Oriented Understudy for Gisting Evaluation), which is commonly used for evaluating the quality of automatic summarization.
 
 ## Contributing
 Contributions to this repository are welcome! If you have an idea for a new summarization model or an improvement to an existing one, feel free to create a pull request.
