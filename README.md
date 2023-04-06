@@ -2,20 +2,14 @@
 
 This repository contains Python implementations of various text summarization models. Text summarization is the process of generating a shorter version of a longer text while preserving its most important information. It has many practical applications, such as summarizing news articles or academic papers, and can be used to save time and improve comprehension.
 
-
-
-## Usage
-
-The repository contains several different text summarization models, including:
-
-  `TextRank`
-  `LexRank`
-  `LSA (Latent Semantic Analysis)`
-  `Luhn Algorithm`
-Each of these models has its own Python module containing the necessary code to run the model.
-
 ## Evaluation
 To evaluate the performance of the models, we have used the ROUGE metric (Recall-Oriented Understudy for Gisting Evaluation), which is commonly used for evaluating the quality of automatic summarization.
+
+## Models
+
+The repository contains several different text summarization models, and these are the scores that wer achieved:
+
+![alt text](https://github.com/Tuhin-SnapD/Text-Summarization-Models/blob/main/Existing%20Scores.jpg?raw=true)
 
 ## Contributing
 Contributions to this repository are welcome! If you have an idea for a new summarization model or an improvement to an existing one, feel free to create a pull request.
