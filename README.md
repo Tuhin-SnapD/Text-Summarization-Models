@@ -7,13 +7,8 @@ To evaluate the performance of the models, we have used the ROUGE metric (Recall
 
 ## Models
 
-The repository contains several different text summarization models, and these are the scores that were achieved:
-
-![existing scores](https://github.com/Tuhin-SnapD/Tuhin-SnapD/blob/main/Pegasus.jpg)
-
-Apart from this 12 more Pegasus models were implemented to compute the scores, and 1 Novel Graph Method was also implemented:
-
-![alt text](https://github.com/Tuhin-SnapD/Tuhin-SnapD/blob/main/Pegasus.jpg?raw=true)
+The repository contains several different 18 text summarization models.
+Apart from this 12 more Pegasus models were implemented to compute the scores, and 1 Novel Graph Method was also implemented
 
 ## Contributing
 Contributions to this repository are welcome! If you have an idea for a new summarization model or an improvement to an existing one, feel free to create a pull request.
