@@ -267,11 +267,7 @@ Includes implementations of:
 
 ## 📈 Performance Comparison
 
-### Existing Models Performance
-![Existing Models Performance](Existing Scores.jpg)
-
-### Pegasus Models Performance
-![Pegasus Models Performance](Pegasus Scores.jpg)
+The performance comparison table above provides detailed metrics for all models. For visual performance analysis, refer to the comprehensive comparison table in the "Model Performance Comparison Table" section.
 
 ## 🛠️ Technical Requirements
 
