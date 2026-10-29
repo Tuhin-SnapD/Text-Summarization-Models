@@ -502,7 +502,7 @@ For questions, issues, or contributions:
 
 All notebooks use the shared global article in `article.txt` and target summary in `reference_summary.txt`. The article is a paraphrased, attributed digest of NOAA NCEI's [global 2025 climate assessment](https://www.ncei.noaa.gov/news/global-climate-202513). Shared preprocessing and evaluation helpers are in `summarization_utils.py`.
 
-The notebook layout is **18 + 12 = 30**: 18 notebooks in `Basic and Advanced Text Summarisation Models/` and 12 checkpoint-specific Pegasus notebooks in `Pegasus Checkpoint Models/`. The original notebook and README sources are preserved in `original_source_backup.zip`; the prior generated notebook state is preserved in `current_generated_snapshot.zip`.
+The notebook layout is **18 + 12 = 30**: 18 notebooks in `Basic and Advanced Text Summarisation Models/` and 12 checkpoint-specific Pegasus notebooks in `Pegasus Checkpoint Models/`.
 
 The latest full run executed all 30 notebooks with no cell errors, inference fallbacks, or missing metrics. Results and metric-method labels are saved in `evaluation_results.csv`.
 

@@ -30,6 +30,8 @@ lightning_logs/
 wandb/
 *.log
 *.tmp
+current_generated_snapshot.zip
+original_source_backup.zip
 
 # Local secrets and machine-specific configuration
 .env
