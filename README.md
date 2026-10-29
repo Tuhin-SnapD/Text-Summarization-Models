@@ -13,7 +13,8 @@ All models are evaluated using:
   - Recall: Measures how much of the reference summary is captured
   - F1-Score: Harmonic mean of precision and recall
 - **BLEU Score** (Bilingual Evaluation Understudy)
-  - Measures the quality of machine-generated text against reference text
+  - Reports single-reference BLEU-4 with add-one smoothing against the shared reference summary
+  - Smoothing avoids a hard zero when a summary lacks a higher-order n-gram; low values still mean limited overlap
 
 ## 🚀 Quick Start Guide
 
@@ -50,28 +51,28 @@ jupyter notebook BERT.ipynb
 
 ## 📊 Model Performance Comparison Table
 
-These are the latest saved notebook results for the shared NOAA article and `reference_summary.txt`. Most basic/advanced notebooks report their existing ROUGE-1 F1 and unsmoothed NLTK sentence BLEU; Graph-Based Summary uses the shared ROUGE/BLEU helper. BLEU values from different methods are not directly comparable. Pegasus checkpoints are listed in the separate table below using the shared evaluator.
+These are the latest results for the shared NOAA article and `reference_summary.txt`. All 30 notebooks now use the same shared evaluator: ROUGE-1/2/L F1 and single-reference BLEU-4 with add-one smoothing. Smoothing prevents a missing higher-order n-gram from forcing BLEU to zero; low values still reflect limited overlap. Pegasus checkpoints are listed separately below, with their original scores retained for provenance.
 
-| Model | Type | ROUGE F1 | BLEU | Pros | Cons | Best For |
-|-------|------|----------|------|------|------|----------|
-| **AI Transformer Pipeline** | Abstractive | 0.291 | 0.000 | Simple pipeline interface | Requires downloaded weights | Quick transformer summaries |
-| **BART** | Abstractive | 0.232 | 0.000 | Coherent abstractive output | Large model, slow on CPU | News summaries |
-| **BERT** | Extractive | 0.355 | 0.064 | Context-aware sentence selection | Extractive and resource-heavy | Context-heavy documents |
-| **Compressive Document Summarization** | Extractive | 0.264 | 0.000 | Concise sentence selection | Can lose context | Length-constrained summaries |
-| **Connected Dominating Set** | Extractive | 0.180 | 0.000 | Graph-based selection | Limited semantic coverage | Graph summarization study |
-| **DistilBART** | Abstractive | 0.291 | 0.000 | Smaller and faster than BART | May produce noisy output | CPU-friendly transformer demos |
-| **GPT-2** | Abstractive | 0.301 | 0.039 | Generative and flexible | Less controlled output | Language-model experiments |
-| **Graph-Based Summary** | Extractive | 0.321 | 0.081 | Combines graph and lexical signals | Limited generation ability | Graph-based baselines |
-| **K-Clustering** | Extractive | 0.359 | 0.861 | Groups related sentences | Sensitive to clustering choices | Topic-based summaries |
-| **LexRank** | Extractive | 0.400 | 0.000 | Strong centrality-based selection | Extractive only | Long articles |
-| **LSA** | Extractive | 0.140 | 0.000 | Captures latent term structure | Can miss sentence context | Semantic analysis demos |
-| **Luhn's Model** | Extractive | 0.346 | 0.000 | Simple frequency-based baseline | Limited semantic understanding | Introductory NLP |
-| **NLTK** | Extractive | 0.390 | 0.000 | Clear, inspectable algorithm | Short outputs yield zero unsmoothed BLEU | Beginners |
-| **SumBasic** | Extractive | 0.136 | 0.000 | Simple probabilistic selection | Repetition and coverage limits | Single-document baselines |
-| **SUMY** | Extractive | 0.119 | 0.000 | Multiple summarization algorithms | Output depends on parser/settings | Summarization toolkit demos |
-| **T5** | Abstractive | 0.268 | 0.000 | Text-to-text architecture | Resource-intensive | Abstractive summaries |
-| **TextRank** | Extractive | 0.269 | 0.000 | Unsupervised graph ranking | Limited context | General-purpose baseline |
-| **TF-IDF** | Extractive | 0.357 | 0.000 | Fast and interpretable | Lexical rather than semantic | Keyword-focused summaries |
+| Model | Type | ROUGE-1 F1 | ROUGE-2 F1 | ROUGE-L F1 | Smoothed BLEU-4 | Pros | Cons | Best For |
+|-------|------|------------|------------|------------|-----------------|------|------|----------|
+| **AI Transformer Pipeline** | Abstractive | 0.326 | 0.126 | 0.186 | 0.085 | Simple pipeline interface | Requires downloaded weights | Quick transformer summaries |
+| **BART** | Abstractive | 0.309 | 0.093 | 0.164 | 0.063 | Coherent abstractive output | Large model, slow on CPU | News summaries |
+| **BERT** | Extractive | 0.417 | 0.141 | 0.222 | 0.133 | Context-aware sentence selection | Extractive and resource-heavy | Context-heavy documents |
+| **Compressive Document Summarization** | Extractive | 0.321 | 0.089 | 0.204 | 0.081 | Concise sentence selection | Can lose context | Length-constrained summaries |
+| **Connected Dominating Set** | Extractive | 0.235 | 0.068 | 0.185 | 0.064 | Graph-based selection | Limited semantic coverage | Graph summarization study |
+| **DistilBART** | Abstractive | 0.326 | 0.126 | 0.186 | 0.085 | Smaller and faster than BART | May produce noisy output | CPU-friendly transformer demos |
+| **GPT-2** | Abstractive | 0.217 | 0.113 | 0.134 | 0.052 | Generative and flexible | Less controlled output | Language-model experiments |
+| **Graph-Based Summary** | Extractive | 0.321 | 0.089 | 0.190 | 0.081 | Combines graph and lexical signals | Limited generation ability | Graph-based baselines |
+| **K-Clustering** | Extractive | 0.396 | 0.180 | 0.178 | 0.129 | Groups related sentences | Sensitive to clustering choices | Topic-based summaries |
+| **LexRank** | Extractive | 0.452 | 0.142 | 0.191 | 0.082 | Strong centrality-based selection | Extractive only | Long articles |
+| **LSA** | Extractive | 0.180 | 0.000 | 0.126 | 0.023 | Captures latent term structure | Can miss sentence context | Semantic analysis demos |
+| **Luhn's Model** | Extractive | 0.347 | 0.101 | 0.174 | 0.052 | Simple frequency-based baseline | Limited semantic understanding | Introductory NLP |
+| **NLTK** | Extractive | 0.404 | 0.149 | 0.207 | 0.079 | Clear, inspectable algorithm | Short outputs can have limited n-gram overlap | Beginners |
+| **SumBasic** | Extractive | 0.206 | 0.019 | 0.150 | 0.026 | Simple probabilistic selection | Repetition and coverage limits | Single-document baselines |
+| **SUMY** | Extractive | 0.189 | 0.000 | 0.126 | 0.013 | Multiple summarization algorithms | Output depends on parser/settings | Summarization toolkit demos |
+| **T5** | Abstractive | 0.306 | 0.073 | 0.180 | 0.046 | Text-to-text architecture | Resource-intensive | Abstractive summaries |
+| **TextRank** | Extractive | 0.371 | 0.098 | 0.177 | 0.080 | Unsupervised graph ranking | Limited context | General-purpose baseline |
+| **TF-IDF** | Extractive | 0.380 | 0.119 | 0.161 | 0.097 | Fast and interpretable | Lexical rather than semantic | Keyword-focused summaries |
 
 ### Pegasus Checkpoint Evaluation Table
 
@@ -103,7 +104,7 @@ These models use fundamental NLP techniques and statistical approaches:
 - **Approach**: Frequency-based sentence scoring using NLTK library
 - **Pros**: Simple implementation, language-independent, well-documented
 - **Cons**: Limited accuracy for complex texts, resource-intensive
-- **Performance**: ROUGE-1 F1: 0.390, unsmoothed BLEU: 0.000
+- **Performance**: ROUGE-1 F1: 0.404, ROUGE-2 F1: 0.149, ROUGE-L F1: 0.207, smoothed BLEU-4: 0.079
 - **Use Case**: Educational purposes, simple documents
 
 #### **TF-IDF Summarization** ([`TFIDF.ipynb`](<Basic and Advanced Text Summarisation Models/TFIDF.ipynb>))
@@ -117,7 +118,7 @@ These models use fundamental NLP techniques and statistical approaches:
 - **Approach**: Probabilistic sentence selection based on word frequency
 - **Pros**: Simple implementation, good for single documents
 - **Cons**: Limited coverage, may lack coherence
-- **Performance**: ROUGE-1 F1: 0.136, unsmoothed BLEU: 0.000
+- **Performance**: ROUGE-1 F1: 0.206, ROUGE-2 F1: 0.019, ROUGE-L F1: 0.150, smoothed BLEU-4: 0.026
 - **Use Case**: Single document summarization
 
 ### 2. Graph-Based Models
@@ -127,14 +128,14 @@ These models represent text as graphs and use centrality algorithms:
 - **Approach**: Graph-based ranking using sentence similarity
 - **Pros**: Automatic, unbiased, consistent results
 - **Cons**: Limited context understanding, may miss nuances
-- **Performance**: ROUGE-1 F1: 0.269, unsmoothed BLEU: 0.000
+- **Performance**: ROUGE-1 F1: 0.371, ROUGE-2 F1: 0.098, ROUGE-L F1: 0.177, smoothed BLEU-4: 0.080
 - **Use Case**: General purpose summarization
 
 #### **LexRank** ([`LexRank.ipynb`](<Basic and Advanced Text Summarisation Models/LexRank.ipynb>))
 - **Approach**: Graph-based lexical centrality using cosine similarity
 - **Pros**: Handles complex texts, good performance on benchmarks
 - **Cons**: Limited coverage, extractive only
-- **Performance**: ROUGE-1 F1: 0.400, unsmoothed BLEU: 0.000
+- **Performance**: ROUGE-1 F1: 0.452, ROUGE-2 F1: 0.142, ROUGE-L F1: 0.191, smoothed BLEU-4: 0.082
 - **Use Case**: Long documents, multi-document summarization
 
 #### **Connected Dominating Set** ([`Connected_Dominating_Set.ipynb`](<Basic and Advanced Text Summarisation Models/Connected_Dominating_Set.ipynb>))
@@ -150,10 +151,10 @@ These models use mathematical techniques to identify important content:
 - **Approach**: Singular Value Decomposition for semantic relationships
 - **Pros**: Captures semantic relationships, good for multi-document
 - **Cons**: Requires large training data, limited coverage
-- **Performance**: ROUGE-1 F1: 0.140, unsmoothed BLEU: 0.000
+- **Performance**: ROUGE-1 F1: 0.180, ROUGE-2 F1: 0.000, ROUGE-L F1: 0.126, smoothed BLEU-4: 0.023
 - **Use Case**: Multi-document summarization, semantic analysis
 
-#### **Sentence Ranking** (overlapping with the TF-IDF sentence-scoring notebook and retained in the original-source archive)
+#### **Sentence Ranking** (overlaps with the TF-IDF sentence-scoring notebook in this collection)
 - **Approach**: Matrix-based sentence importance scoring
 - **Pros**: Systematic ranking, handles large documents
 - **Cons**: May miss context, computational expense
@@ -168,7 +169,7 @@ These models group similar content together:
 - **Cons**: Requires parameter tuning, may lose context
 - **Use Case**: Topic-based summarization
 
-#### **Cluster-Based Summarization** (overlapping with K-Clustering and retained in the original-source archive)
+#### **Cluster-Based Summarization** (overlaps with K-Clustering in this collection)
 - **Approach**: Hierarchical clustering for document structure
 - **Pros**: Preserves document structure, systematic
 - **Cons**: Computational complexity, parameter sensitivity
@@ -196,28 +197,28 @@ These are state-of-the-art deep learning models:
 - **Approach**: Pre-trained BERT model for sentence extraction
 - **Pros**: High accuracy, captures context well
 - **Cons**: Limited to extractive, depends on pre-trained models
-- **Performance**: ROUGE-1 F1: 0.355, unsmoothed BLEU: 0.064
+- **Performance**: ROUGE-1 F1: 0.417, ROUGE-2 F1: 0.141, ROUGE-L F1: 0.222, smoothed BLEU-4: 0.133
 - **Use Case**: Context-heavy documents
 
 #### **BART** ([`BART.ipynb`](<Basic and Advanced Text Summarisation Models/BART.ipynb>))
 - **Approach**: Bidirectional and Auto-Regressive Transformer
 - **Pros**: State-of-the-art performance, high accuracy
 - **Cons**: Resource-intensive, large model size
-- **Performance**: ROUGE-1 F1: 0.232, unsmoothed BLEU: 0.000
+- **Performance**: ROUGE-1 F1: 0.309, ROUGE-2 F1: 0.093, ROUGE-L F1: 0.164, smoothed BLEU-4: 0.063
 - **Use Case**: High-quality abstractive summaries
 
 #### **T5** ([`T5.ipynb`](<Basic and Advanced Text Summarisation Models/T5.ipynb>))
 - **Approach**: Text-To-Text Transfer Transformer
 - **Pros**: High accuracy, customizable, multilingual
 - **Cons**: Resource-intensive, technical complexity
-- **Performance**: ROUGE-1 F1: 0.268, unsmoothed BLEU: 0.000
+- **Performance**: ROUGE-1 F1: 0.306, ROUGE-2 F1: 0.073, ROUGE-L F1: 0.180, smoothed BLEU-4: 0.046
 - **Use Case**: Production systems, multilingual applications
 
 #### **GPT-2** ([`GPT_2.ipynb`](<Basic and Advanced Text Summarisation Models/GPT_2.ipynb>))
 - **Approach**: Generative Pre-trained Transformer 2
 - **Pros**: Large language model, contextual understanding
 - **Cons**: Lack of control, high computational costs
-- **Performance**: ROUGE-1 F1: 0.301, unsmoothed BLEU: 0.039
+- **Performance**: ROUGE-1 F1: 0.217, ROUGE-2 F1: 0.113, ROUGE-L F1: 0.134, smoothed BLEU-4: 0.052
 - **Use Case**: Research, creative summarization
 
 #### **DistilBART** ([`Distilbart.ipynb`](<Basic and Advanced Text Summarisation Models/Distilbart.ipynb>))
@@ -228,7 +229,7 @@ These are state-of-the-art deep learning models:
 
 ### 7. Specialized Models
 
-#### **Gensim** (the original example is retained in the original-source archive; it overlapped with the graph-based sentence-ranking examples)
+#### **Gensim** (the earlier example overlapped with the graph-based sentence-ranking notebooks)
 - **Approach**: Topic modeling and document similarity
 - **Pros**: Good for topic-based summarization
 - **Cons**: May miss specific details
@@ -288,15 +289,14 @@ Includes implementations of:
 
 ### Key Insights from Results:
 
-1. **Highest Basic/Advanced ROUGE-1 F1 in this run**: LexRank scored 0.400.
-2. **Highest Basic/Advanced notebook BLEU in this run**: K-Clustering scored 0.861; BLEU implementations vary between notebooks.
-3. **Pegasus results**: Use the separate shared-evaluator table above; do not compare its smoothed BLEU-4 directly with unsmoothed notebook BLEU.
+1. **Highest Basic/Advanced ROUGE-1 F1 in this run**: LexRank scored 0.452.
+2. **Highest Basic/Advanced smoothed BLEU-4 in this run**: K-Clustering scored 0.129.
+3. **Pegasus results**: Use the separate table above; current scores use the same shared evaluator as the basic/advanced notebooks.
 
 ### Performance Trends:
-- **Transformer models** generally outperform traditional methods
-- **Abstractive models** show higher BLEU scores but lower ROUGE scores
-- **Extractive models** are more consistent but less creative
-- **Graph-based methods** provide good baseline performance
+- Scores reflect one shared article and reference summary; they are not broad benchmark rankings.
+- ROUGE-1, ROUGE-2, ROUGE-L, and BLEU-4 capture different types of overlap, so a model can rank differently across metrics.
+- BLEU-4 uses add-one smoothing; a nonzero score can still indicate limited n-gram overlap.
 
 ## 📈 Performance Comparison
 
@@ -305,7 +305,7 @@ Includes implementations of:
 | Basic and advanced notebooks | See the model comparison table above. |
 | Pegasus checkpoints | See the dedicated Pegasus evaluation table above. |
 
-The original comparison images were removed as requested. Their score information is preserved in the tables above and the original-source archive.
+The original comparison images were removed as requested. Their score information is preserved in the tables above.
 
 ## 🛠️ Technical Requirements
 
@@ -504,7 +504,7 @@ All notebooks use the shared global article in `article.txt` and target summary 
 
 The notebook layout is **18 + 12 = 30**: 18 notebooks in `Basic and Advanced Text Summarisation Models/` and 12 checkpoint-specific Pegasus notebooks in `Pegasus Checkpoint Models/`.
 
-The latest full run executed all 30 notebooks with no cell errors, inference fallbacks, or missing metrics. Results and metric-method labels are saved in `evaluation_results.csv`.
+The latest full run executed all 30 notebooks with no cell errors, inference fallbacks, or missing metrics. Results and the shared metric-method label are saved in `evaluation_results.csv`.
 
 ### Updated run results
 

@@ -28,6 +28,13 @@ os.environ["JUPYTER_DATA_DIR"] = str(ROOT / ".jupyter_data")
 os.environ["JUPYTER_RUNTIME_DIR"] = str(ROOT / ".jupyter_runtime")
 os.environ.setdefault("HF_HOME", str(ROOT / ".model_cache"))
 os.environ["NLTK_DATA"] = str(ROOT / ".nltk_data")
+for directory in (
+    ROOT / ".ipython",
+    ROOT / ".jupyter_config",
+    ROOT / ".jupyter_data",
+    ROOT / ".jupyter_runtime",
+):
+    directory.mkdir(parents=True, exist_ok=True)
 local_jupyter_path = str(ROOT / ".venv" / "share" / "jupyter")
 existing_jupyter_path = os.environ.get("JUPYTER_PATH", "")
 os.environ["JUPYTER_PATH"] = os.pathsep.join(
@@ -71,30 +78,13 @@ def _metrics(notebook, text):
             "rouge2_f1": values.get("rouge2_f1", ""),
             "rougeL_f1": values.get("rougeL_f1", ""),
             "bleu4": values.get("bleu4", ""),
-            "legacy_rouge1_f1": "",
-            "notebook_bleu": "",
             "metric_method": "shared ROUGE-1/2/L F1 and smoothed BLEU-4",
-        }
-
-    f1 = re.findall(r"F1-Score:\s*([0-9]+(?:\.[0-9]+)?)", text)
-    bleu = re.findall(r"BLEU Score:\s*([0-9]+(?:\.[0-9]+)?)", text)
-    if f1 and bleu:
-        return {
-            "rouge1_f1": "",
-            "rouge2_f1": "",
-            "rougeL_f1": "",
-            "bleu4": "",
-            "legacy_rouge1_f1": f1[-1],
-            "notebook_bleu": bleu[-1],
-            "metric_method": "notebook ROUGE-1 F1 and unsmoothed NLTK sentence BLEU",
         }
     return {
         "rouge1_f1": "",
         "rouge2_f1": "",
         "rougeL_f1": "",
         "bleu4": "",
-        "legacy_rouge1_f1": "",
-        "notebook_bleu": "",
         "metric_method": "missing metric output",
     }
 
@@ -150,7 +140,7 @@ def run_notebook(path):
 def write_results(rows):
     columns = [
         "notebook", "family", "status", "rouge1_f1", "rouge2_f1", "rougeL_f1",
-        "bleu4", "legacy_rouge1_f1", "notebook_bleu", "metric_method", "details",
+        "bleu4", "metric_method", "details",
     ]
     with RESULTS_PATH.open("w", encoding="utf-8", newline="") as result_file:
         writer = csv.DictWriter(result_file, fieldnames=columns)
