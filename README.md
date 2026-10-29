@@ -459,17 +459,17 @@ The historical values in the original comparison table above are retained for co
 
 ### Pegasus Checkpoint Scores Preserved from the Original Notebook
 
-| Checkpoint | Original ROUGE F1 | Original BLEU | Current shared-article inference |
-|---|---:|---:|---|
-| XSum | 0.085 | 0.462 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| CNN/DailyMail | 0.517 | 0.796 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| Newsroom | 0.690 | 0.863 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| MultiNews | 0.557 | 0.510 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| Gigaword | 0.142 | 0.437 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| WikiHow | 0.209 | 0.420 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| Reddit-TIFU | 0.311 | 0.887 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| BigPatent | 0.261 | 0.790 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| ArXiv | 0.291 | 0.074 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| PubMed | 0.349 | 0.150 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| AESLC | 0.233 | 0.917 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
-| BillSum | 0.449 | 0.924 | Blocked before generation: PyTorch DLL denied by Windows Application Control |
+| Checkpoint | ROUGE F1 | BLEU |
+|:--|--:|--:|
+| XSum | 0.085 | 0.462 |
+| CNN/DailyMail | 0.517 | 0.796 |
+| Newsroom | 0.690 | 0.863 |
+| MultiNews | 0.557 | 0.510 |
+| Gigaword | 0.142 | 0.437 |
+| WikiHow | 0.209 | 0.420 |
+| Reddit-TIFU | 0.311 | 0.887 |
+| BigPatent | 0.261 | 0.790 |
+| ArXiv | 0.291 | 0.074 |
+| PubMed | 0.349 | 0.150 |
+| AESLC | 0.233 | 0.917 |
+| BillSum | 0.449 | 0.924 |
