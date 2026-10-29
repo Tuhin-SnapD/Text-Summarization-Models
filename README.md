@@ -59,6 +59,18 @@ jupyter notebook BERT.ipynb
 | **BART** | Abstractive | 0.402 | 0.905 | State-of-the-art | Large model size | High-quality summaries |
 | **LexRank** | Extractive | 0.357 | 0.651 | Handles complex texts | Limited coverage | Long documents |
 | **SumBasic** | Extractive | 0.589 | 0.621 | Simple implementation | Limited coverage | Single documents |
+| **Pegasus XSum** | Abstractive | 0.085 | 0.462 | Extreme news summaries | Very short outputs | BBC-style news |
+| **Pegasus CNN/DailyMail** | Abstractive | 0.517 | 0.796 | News article summaries | News-domain focus | Daily news |
+| **Pegasus Newsroom** | Abstractive | 0.690 | 0.863 | Diverse news summaries | News-domain focus | Newsroom articles |
+| **Pegasus MultiNews** | Abstractive | 0.557 | 0.510 | Multi-document summaries | Needs grouped sources | News collections |
+| **Pegasus Gigaword** | Abstractive | 0.142 | 0.437 | Concise headline generation | Short-output bias | News headlines |
+| **Pegasus WikiHow** | Abstractive | 0.209 | 0.420 | How-to content | Instructional domain | How-to articles |
+| **Pegasus Reddit-TIFU** | Abstractive | 0.311 | 0.887 | Informal narrative summaries | Reddit-domain style | User stories |
+| **Pegasus BigPatent** | Abstractive | 0.261 | 0.790 | Long patent documents | Technical language | Patent abstracts |
+| **Pegasus ArXiv** | Abstractive | 0.291 | 0.074 | Research paper summaries | Long technical input | Scientific papers |
+| **Pegasus PubMed** | Abstractive | 0.349 | 0.150 | Biomedical summaries | Biomedical domain | Medical literature |
+| **Pegasus AESLC** | Abstractive | 0.233 | 0.917 | Email-oriented summaries | Email-domain focus | Email subject lines |
+| **Pegasus BillSum** | Abstractive | 0.449 | 0.924 | Legislative summaries | Legal language | Bills and legislation |
 
 ## 🏗️ Model Categories
 
@@ -454,22 +466,4 @@ Install the dependencies in `requirements.txt`, then run `python run_all_noteboo
 
 ### Updated run results
 
-The historical values in the original comparison table above are retained for context; they are not new scores from the shared NOAA article. Transformer fallback metrics are baseline results and must not be presented as pretrained-model scores. The original Pegasus notebook also saved one set of scores; they are reproduced below so the table information is not lost. These values were measured on the original COVID-19 sample, compared against the source article rather than a human-written reference, and are not comparable with the shared NOAA article evaluation. Current Pegasus inference was attempted in Jupyter, but Windows Application Control blocked the local PyTorch runtime before generation.
-
-
-### Pegasus Checkpoint Scores Preserved from the Original Notebook
-
-| Checkpoint | ROUGE F1 | BLEU |
-|:--|--:|--:|
-| XSum | 0.085 | 0.462 |
-| CNN/DailyMail | 0.517 | 0.796 |
-| Newsroom | 0.690 | 0.863 |
-| MultiNews | 0.557 | 0.510 |
-| Gigaword | 0.142 | 0.437 |
-| WikiHow | 0.209 | 0.420 |
-| Reddit-TIFU | 0.311 | 0.887 |
-| BigPatent | 0.261 | 0.790 |
-| ArXiv | 0.291 | 0.074 |
-| PubMed | 0.349 | 0.150 |
-| AESLC | 0.233 | 0.917 |
-| BillSum | 0.449 | 0.924 |
+The historical values in the original comparison table above are retained for context; they are not new scores from the shared NOAA article. Transformer fallback metrics are baseline results and must not be presented as pretrained-model scores. The Pegasus scores are now included in the main Model Performance Comparison Table above. They come from the original COVID-19 sample and were compared against the source article rather than a human-written reference, so they are not comparable with the shared NOAA article evaluation. Current Pegasus inference was attempted in Jupyter, but Windows Application Control blocked the local PyTorch runtime before generation.
