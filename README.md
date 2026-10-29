@@ -268,12 +268,12 @@ Includes implementations of:
 ## 📈 Performance Comparison
 
 ### Existing Models Performance
-![Existing Models Performance](Existing.png)
+| Existing models | Updated tabular results below |
 
 ### Pegasus Models Performance
-![Pegasus Models Performance](Pegasus.png)
+| Pegasus models | Updated tabular results below |
 
-The performance comparison table above provides detailed metrics for all models. These visualizations complement the comprehensive comparison table in the "Model Performance Comparison Table" section.
+The original comparison images were removed as requested. Their replacement is the updated results table in the added section below.
 
 ## 🛠️ Technical Requirements
 
@@ -443,3 +443,16 @@ For questions, issues, or contributions:
 - **Total Models**: 31
 - **Python Version**: 3.7+
 - **License**: Educational Use
+
+
+## Shared Article, Notebook Layout, and Execution (Added October 30, 2026)
+
+All notebooks use the shared global article in `article.txt` and the target summary in `reference_summary.txt`. The article is a paraphrased, attributed digest of NOAA NCEI's [global 2025 climate assessment](https://www.ncei.noaa.gov/news/global-climate-202513). Shared preprocessing and ROUGE/BLEU evaluation helpers are in `summarization_utils.py`.
+
+The notebook layout is **18 + 12 = 30**: 18 notebooks in `Basic to Advance Text Summarisation Models/` and 12 checkpoint-specific Pegasus notebooks in `Models Used in Proposed Architecture/`. The original sample data and notebook source are preserved in `original_source_backup.zip`; the generated working state is preserved in `current_generated_snapshot.zip`.
+
+Use `python run_all_notebooks.py` for the standard-library Python-cell runner, or install `requirements.txt` and use Jupyter to execute notebooks with their original implementations. The Jupyter workflow is the authoritative run for pretrained model inference.
+
+### Updated run results
+
+Results for the original model performance table above remain historical values. Updated run results will be recorded here only after the actual notebook kernels complete.

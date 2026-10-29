@@ -1,0 +1,7 @@
+.venv/
+.model_cache/
+.nltk_data/
+__pycache__/
+original_source_backup.zip
+current_generated_snapshot.zip
+*.tmp

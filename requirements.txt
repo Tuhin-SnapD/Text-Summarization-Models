@@ -1,0 +1,16 @@
+jupyterlab
+ipykernel
+nbclient
+numpy
+pandas
+scikit-learn
+nltk
+networkx
+rouge
+gensim
+sumy
+spacy
+textblob
+wordcloud
+matplotlib
+-r requirements-models.txt
