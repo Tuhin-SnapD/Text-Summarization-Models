@@ -2,3 +2,4 @@ torch
 transformers==4.57.1
 sentencepiece
 bert-extractive-summarizer
+protobuf>=4.25

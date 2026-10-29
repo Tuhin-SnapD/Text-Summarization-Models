@@ -48,6 +48,8 @@ jupyter notebook BERT.ipynb
 
 ## 📊 Model Performance Comparison Table
 
+Existing non-Pegasus rows retain the project’s historical results. For Pegasus rows, the current shared-article ROUGE-1 F1 and BLEU-4 appear first; the original notebook scores are preserved in parentheses.
+
 | Model | Type | ROUGE F1 | BLEU | Pros | Cons | Best For |
 |-------|------|----------|------|------|------|----------|
 | **GPT-2** | Abstractive | 0.797 | 0.423 | High recall, contextual | Low control, expensive | Research, complex docs |
@@ -59,18 +61,18 @@ jupyter notebook BERT.ipynb
 | **BART** | Abstractive | 0.402 | 0.905 | State-of-the-art | Large model size | High-quality summaries |
 | **LexRank** | Extractive | 0.357 | 0.651 | Handles complex texts | Limited coverage | Long documents |
 | **SumBasic** | Extractive | 0.589 | 0.621 | Simple implementation | Limited coverage | Single documents |
-| **Pegasus XSum** | Abstractive | 0.085 | 0.462 | Extreme news summaries | Very short outputs | BBC-style news |
-| **Pegasus CNN/DailyMail** | Abstractive | 0.517 | 0.796 | News article summaries | News-domain focus | Daily news |
-| **Pegasus Newsroom** | Abstractive | 0.690 | 0.863 | Diverse news summaries | News-domain focus | Newsroom articles |
-| **Pegasus MultiNews** | Abstractive | 0.557 | 0.510 | Multi-document summaries | Needs grouped sources | News collections |
-| **Pegasus Gigaword** | Abstractive | 0.142 | 0.437 | Concise headline generation | Short-output bias | News headlines |
-| **Pegasus WikiHow** | Abstractive | 0.209 | 0.420 | How-to content | Instructional domain | How-to articles |
-| **Pegasus Reddit-TIFU** | Abstractive | 0.311 | 0.887 | Informal narrative summaries | Reddit-domain style | User stories |
-| **Pegasus BigPatent** | Abstractive | 0.261 | 0.790 | Long patent documents | Technical language | Patent abstracts |
-| **Pegasus ArXiv** | Abstractive | 0.291 | 0.074 | Research paper summaries | Long technical input | Scientific papers |
-| **Pegasus PubMed** | Abstractive | 0.349 | 0.150 | Biomedical summaries | Biomedical domain | Medical literature |
-| **Pegasus AESLC** | Abstractive | 0.233 | 0.917 | Email-oriented summaries | Email-domain focus | Email subject lines |
-| **Pegasus BillSum** | Abstractive | 0.449 | 0.924 | Legislative summaries | Legal language | Bills and legislation |
+| **Pegasus XSum** | Abstractive | 0.202 (orig. 0.085) | 0.012 (orig. 0.462) | Extreme news summaries | Very short outputs | BBC-style news |
+| **Pegasus CNN/DailyMail** | Abstractive | 0.186 (orig. 0.517) | 0.033 (orig. 0.796) | News article summaries | News-domain focus | Daily news |
+| **Pegasus Newsroom** | Abstractive | 0.339 (orig. 0.690) | 0.084 (orig. 0.863) | Diverse news summaries | News-domain focus | Newsroom articles |
+| **Pegasus MultiNews** | Abstractive | 0.276 (orig. 0.557) | 0.062 (orig. 0.510) | Multi-document summaries | Needs grouped sources | News collections |
+| **Pegasus Gigaword** | Abstractive | 0.120 (orig. 0.142) | 0.003 (orig. 0.437) | Concise headline generation | Short-output bias | News headlines |
+| **Pegasus WikiHow** | Abstractive | 0.176 (orig. 0.209) | 0.011 (orig. 0.420) | How-to content | Instructional domain | How-to articles |
+| **Pegasus Reddit-TIFU** | Abstractive | 0.356 (orig. 0.311) | 0.033 (orig. 0.887) | Informal narrative summaries | Reddit-domain style | User stories |
+| **Pegasus BigPatent** | Abstractive | 0.295 (orig. 0.261) | 0.009 (orig. 0.790) | Long patent documents | Technical language | Patent abstracts |
+| **Pegasus ArXiv** | Abstractive | 0.236 (orig. 0.291) | 0.048 (orig. 0.074) | Research paper summaries | Long technical input | Scientific papers |
+| **Pegasus PubMed** | Abstractive | 0.176 (orig. 0.349) | 0.037 (orig. 0.150) | Biomedical summaries | Biomedical domain | Medical literature |
+| **Pegasus AESLC** | Abstractive | 0.075 (orig. 0.233) | 0.001 (orig. 0.917) | Email-oriented summaries | Email-domain focus | Email subject lines |
+| **Pegasus BillSum** | Abstractive | 0.340 (orig. 0.449) | 0.047 (orig. 0.924) | Legislative summaries | Legal language | Bills and legislation |
 
 ## 🏗️ Model Categories
 
@@ -462,8 +464,8 @@ All notebooks use the shared global article in `article.txt` and the target summ
 
 The notebook layout is **18 + 12 = 30**: 18 notebooks in `Basic to Advance Text Summarisation Models/` and 12 checkpoint-specific Pegasus notebooks in `Models Used in Proposed Architecture/`. The complete original notebook and README sources (with the obsolete score images omitted) are preserved in `original_source_backup.zip`; the prior generated 30-notebook state is preserved in `current_generated_snapshot.zip`.
 
-Install the dependencies in `requirements.txt`, then run `python run_all_notebooks.py` to execute all 30 notebooks in the local Jupyter kernel and save their outputs. In this Windows environment, all 30 notebooks completed with no cell errors. Twelve classical notebooks ran their selected methods, six transformer notebooks used the documented TextRank fallback because Windows Application Control blocked the PyTorch DLL, and the 12 Pegasus notebooks reported that inference was unavailable before checkpoint downloads began.
+Install the dependencies in `requirements.txt` and `requirements-models.txt`, then run `python run_all_notebooks.py` to execute all 30 notebooks in the local Jupyter kernel and save their outputs. After Smart App Control was turned off, PyTorch 2.15.0+cpu loaded successfully. All 30 notebooks completed without cell errors, and all six transformer notebooks plus all 12 Pegasus checkpoints generated summaries. The Pegasus rows above show current shared-article ROUGE-1 F1 and BLEU-4, followed by the preserved historical values.
 
 ### Updated run results
 
-The historical values in the original comparison table above are retained for context; they are not new scores from the shared NOAA article. Transformer fallback metrics are baseline results and must not be presented as pretrained-model scores. The Pegasus scores are now included in the main Model Performance Comparison Table above. They come from the original COVID-19 sample and were compared against the source article rather than a human-written reference, so they are not comparable with the shared NOAA article evaluation. Current Pegasus inference was attempted in Jupyter, but Windows Application Control blocked the local PyTorch runtime before generation.
+The non-Pegasus scores retained from the original comparison are historical. Original Pegasus scores used the COVID-19 sample and compared against the source article, not a human-written reference, so they are not directly comparable with the new shared-article metrics. Current Pegasus scores were generated against `reference_summary.txt` with the shared NOAA article. The Gigaword notebook now truncates input to its checkpoint’s position limit; `protobuf` is included in `requirements-models.txt` for Pegasus tokenization.
