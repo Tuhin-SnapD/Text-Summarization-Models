@@ -1,9 +1,43 @@
+# Python environments and bytecode
 .venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Model, tokenizer, and language-resource caches (downloaded on demand)
 .model_cache/
 .nltk_data/
-__pycache__/
+
+# Jupyter runtime state
 .ipython/
 .jupyter_config/
 .jupyter_data/
 .jupyter_runtime/
+
+# Test, type-check, and coverage output
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Generated local artifacts and logs
+outputs/
+runs/
+lightning_logs/
+wandb/
+*.log
 *.tmp
+
+# Local secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+.secrets/
+secrets/
+credentials.json
+token.json
+*.pem
+*.key

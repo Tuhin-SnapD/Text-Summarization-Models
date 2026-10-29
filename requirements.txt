@@ -1,6 +1,7 @@
 jupyterlab
 ipykernel
 nbclient
+nbformat
 numpy
 pandas
 scikit-learn
@@ -13,4 +14,3 @@ spacy
 textblob
 wordcloud
 matplotlib
--r requirements-models.txt

@@ -19,12 +19,14 @@ All models are evaluated using:
 
 ### Prerequisites
 ```bash
-# Python 3.7+ required
+# Python 3.9+ required
 python --version
 
 # Install core dependencies
-pip install -r requirements.txt
+pip install -r requirements-models.txt
 ```
+
+For a complete setup of all notebooks and model checkpoints, see [How to Install All Models](#how-to-install-all-models).
 
 ### Basic Usage Example
 ```python
@@ -40,7 +42,7 @@ print(summary)
 ### Running a Specific Model
 ```bash
 # Navigate to the model directory
-cd "Basic to Advance Text Summarisation Models"
+cd "Basic and Advanced Text Summarisation Models"
 
 # Run any Jupyter notebook
 jupyter notebook BERT.ipynb
@@ -48,76 +50,94 @@ jupyter notebook BERT.ipynb
 
 ## 📊 Model Performance Comparison Table
 
-Existing non-Pegasus rows retain the project’s historical results. For Pegasus rows, the current shared-article ROUGE-1 F1 and BLEU-4 appear first; the original notebook scores are preserved in parentheses.
+These are the latest saved notebook results for the shared NOAA article and `reference_summary.txt`. Most basic/advanced notebooks report their existing ROUGE-1 F1 and unsmoothed NLTK sentence BLEU; Graph-Based Summary uses the shared ROUGE/BLEU helper. BLEU values from different methods are not directly comparable. Pegasus checkpoints are listed in the separate table below using the shared evaluator.
 
 | Model | Type | ROUGE F1 | BLEU | Pros | Cons | Best For |
 |-------|------|----------|------|------|------|----------|
-| **GPT-2** | Abstractive | 0.797 | 0.423 | High recall, contextual | Low control, expensive | Research, complex docs |
-| **LSA** | Extractive | 0.602 | 0.869 | Semantic relationships | Needs large data | Multi-document |
-| **TextRank** | Extractive | 0.586 | 0.694 | Unbiased, consistent | Limited context | General purpose |
-| **T5** | Abstractive | 0.573 | 0.683 | High accuracy, multilingual | Resource intensive | Production systems |
-| **NLTK** | Extractive | 0.589 | 0.869 | Simple, language-independent | Limited accuracy | Beginners |
-| **BERT** | Extractive | 0.545 | 0.677 | Context understanding | Extractive only | Context-heavy docs |
-| **BART** | Abstractive | 0.402 | 0.905 | State-of-the-art | Large model size | High-quality summaries |
-| **LexRank** | Extractive | 0.357 | 0.651 | Handles complex texts | Limited coverage | Long documents |
-| **SumBasic** | Extractive | 0.589 | 0.621 | Simple implementation | Limited coverage | Single documents |
-| **Pegasus XSum** | Abstractive | 0.202 (orig. 0.085) | 0.012 (orig. 0.462) | Extreme news summaries | Very short outputs | BBC-style news |
-| **Pegasus CNN/DailyMail** | Abstractive | 0.186 (orig. 0.517) | 0.033 (orig. 0.796) | News article summaries | News-domain focus | Daily news |
-| **Pegasus Newsroom** | Abstractive | 0.339 (orig. 0.690) | 0.084 (orig. 0.863) | Diverse news summaries | News-domain focus | Newsroom articles |
-| **Pegasus MultiNews** | Abstractive | 0.276 (orig. 0.557) | 0.062 (orig. 0.510) | Multi-document summaries | Needs grouped sources | News collections |
-| **Pegasus Gigaword** | Abstractive | 0.120 (orig. 0.142) | 0.003 (orig. 0.437) | Concise headline generation | Short-output bias | News headlines |
-| **Pegasus WikiHow** | Abstractive | 0.176 (orig. 0.209) | 0.011 (orig. 0.420) | How-to content | Instructional domain | How-to articles |
-| **Pegasus Reddit-TIFU** | Abstractive | 0.356 (orig. 0.311) | 0.033 (orig. 0.887) | Informal narrative summaries | Reddit-domain style | User stories |
-| **Pegasus BigPatent** | Abstractive | 0.295 (orig. 0.261) | 0.009 (orig. 0.790) | Long patent documents | Technical language | Patent abstracts |
-| **Pegasus ArXiv** | Abstractive | 0.236 (orig. 0.291) | 0.048 (orig. 0.074) | Research paper summaries | Long technical input | Scientific papers |
-| **Pegasus PubMed** | Abstractive | 0.176 (orig. 0.349) | 0.037 (orig. 0.150) | Biomedical summaries | Biomedical domain | Medical literature |
-| **Pegasus AESLC** | Abstractive | 0.075 (orig. 0.233) | 0.001 (orig. 0.917) | Email-oriented summaries | Email-domain focus | Email subject lines |
-| **Pegasus BillSum** | Abstractive | 0.340 (orig. 0.449) | 0.047 (orig. 0.924) | Legislative summaries | Legal language | Bills and legislation |
+| **AI Transformer Pipeline** | Abstractive | 0.291 | 0.000 | Simple pipeline interface | Requires downloaded weights | Quick transformer summaries |
+| **BART** | Abstractive | 0.232 | 0.000 | Coherent abstractive output | Large model, slow on CPU | News summaries |
+| **BERT** | Extractive | 0.355 | 0.064 | Context-aware sentence selection | Extractive and resource-heavy | Context-heavy documents |
+| **Compressive Document Summarization** | Extractive | 0.264 | 0.000 | Concise sentence selection | Can lose context | Length-constrained summaries |
+| **Connected Dominating Set** | Extractive | 0.180 | 0.000 | Graph-based selection | Limited semantic coverage | Graph summarization study |
+| **DistilBART** | Abstractive | 0.291 | 0.000 | Smaller and faster than BART | May produce noisy output | CPU-friendly transformer demos |
+| **GPT-2** | Abstractive | 0.301 | 0.039 | Generative and flexible | Less controlled output | Language-model experiments |
+| **Graph-Based Summary** | Extractive | 0.321 | 0.081 | Combines graph and lexical signals | Limited generation ability | Graph-based baselines |
+| **K-Clustering** | Extractive | 0.359 | 0.861 | Groups related sentences | Sensitive to clustering choices | Topic-based summaries |
+| **LexRank** | Extractive | 0.400 | 0.000 | Strong centrality-based selection | Extractive only | Long articles |
+| **LSA** | Extractive | 0.140 | 0.000 | Captures latent term structure | Can miss sentence context | Semantic analysis demos |
+| **Luhn's Model** | Extractive | 0.346 | 0.000 | Simple frequency-based baseline | Limited semantic understanding | Introductory NLP |
+| **NLTK** | Extractive | 0.390 | 0.000 | Clear, inspectable algorithm | Short outputs yield zero unsmoothed BLEU | Beginners |
+| **SumBasic** | Extractive | 0.136 | 0.000 | Simple probabilistic selection | Repetition and coverage limits | Single-document baselines |
+| **SUMY** | Extractive | 0.119 | 0.000 | Multiple summarization algorithms | Output depends on parser/settings | Summarization toolkit demos |
+| **T5** | Abstractive | 0.268 | 0.000 | Text-to-text architecture | Resource-intensive | Abstractive summaries |
+| **TextRank** | Extractive | 0.269 | 0.000 | Unsupervised graph ranking | Limited context | General-purpose baseline |
+| **TF-IDF** | Extractive | 0.357 | 0.000 | Fast and interpretable | Lexical rather than semantic | Keyword-focused summaries |
+
+### Pegasus Checkpoint Evaluation Table
+
+Current Pegasus values use the same shared article/reference and shared ROUGE-1/2/L F1 plus smoothed BLEU-4 evaluator. Original values are retained for provenance; they used a different source article and comparison target and are not directly comparable.
+
+| Checkpoint | Current ROUGE-1 F1 | Current ROUGE-2 F1 | Current ROUGE-L F1 | Current BLEU-4 | Original ROUGE F1 | Original BLEU |
+|---|---:|---:|---:|---:|---:|---:|
+| XSum | 0.202 | 0.046 | 0.157 | 0.012 | 0.085 | 0.462 |
+| CNN/DailyMail | 0.186 | 0.063 | 0.103 | 0.033 | 0.517 | 0.796 |
+| Newsroom | 0.339 | 0.130 | 0.222 | 0.084 | 0.690 | 0.863 |
+| MultiNews | 0.276 | 0.093 | 0.195 | 0.062 | 0.557 | 0.510 |
+| Gigaword | 0.120 | 0.049 | 0.120 | 0.003 | 0.142 | 0.437 |
+| WikiHow | 0.176 | 0.022 | 0.176 | 0.011 | 0.209 | 0.420 |
+| Reddit-TIFU | 0.356 | 0.159 | 0.244 | 0.033 | 0.311 | 0.887 |
+| BigPatent | 0.295 | 0.023 | 0.250 | 0.009 | 0.261 | 0.790 |
+| ArXiv | 0.236 | 0.048 | 0.142 | 0.048 | 0.291 | 0.074 |
+| PubMed | 0.176 | 0.038 | 0.101 | 0.037 | 0.349 | 0.150 |
+| AESLC | 0.075 | 0.000 | 0.075 | 0.001 | 0.233 | 0.917 |
+| BillSum | 0.340 | 0.083 | 0.204 | 0.047 | 0.449 | 0.924 |
+
+Machine-readable results from the latest full run are in [`evaluation_results.csv`](evaluation_results.csv).
 
 ## 🏗️ Model Categories
 
 ### 1. Basic Statistical Models
 These models use fundamental NLP techniques and statistical approaches:
 
-#### **NLTK-based Summarization** ([`NLTK.ipynb`](<Basic to Advance Text Summarisation Models/NLTK.ipynb>))
+#### **NLTK-based Summarization** ([`NLTK.ipynb`](<Basic and Advanced Text Summarisation Models/NLTK.ipynb>))
 - **Approach**: Frequency-based sentence scoring using NLTK library
 - **Pros**: Simple implementation, language-independent, well-documented
 - **Cons**: Limited accuracy for complex texts, resource-intensive
-- **Performance**: ROUGE F1: 0.589, BLEU: 0.869
+- **Performance**: ROUGE-1 F1: 0.390, unsmoothed BLEU: 0.000
 - **Use Case**: Educational purposes, simple documents
 
-#### **TF-IDF Summarization** ([`TFIDF.ipynb`](<Basic to Advance Text Summarisation Models/TFIDF.ipynb>))
+#### **TF-IDF Summarization** ([`TFIDF.ipynb`](<Basic and Advanced Text Summarisation Models/TFIDF.ipynb>))
 - **Approach**: Term Frequency-Inverse Document Frequency weighting
 - **Pros**: Effective for identifying important terms, widely used
 - **Cons**: May miss context, struggles with technical jargon
 - **Performance**: Evaluated using standard TF-IDF scoring
 - **Use Case**: Keyword extraction, document classification
 
-#### **SumBasic Algorithm** ([`SumBasic.ipynb`](<Basic to Advance Text Summarisation Models/SumBasic.ipynb>))
+#### **SumBasic Algorithm** ([`SumBasic.ipynb`](<Basic and Advanced Text Summarisation Models/SumBasic.ipynb>))
 - **Approach**: Probabilistic sentence selection based on word frequency
 - **Pros**: Simple implementation, good for single documents
 - **Cons**: Limited coverage, may lack coherence
-- **Performance**: ROUGE F1: 0.589, BLEU: 0.621
+- **Performance**: ROUGE-1 F1: 0.136, unsmoothed BLEU: 0.000
 - **Use Case**: Single document summarization
 
 ### 2. Graph-Based Models
 These models represent text as graphs and use centrality algorithms:
 
-#### **TextRank** ([`TextRank.ipynb`](<Basic to Advance Text Summarisation Models/TextRank.ipynb>))
+#### **TextRank** ([`TextRank.ipynb`](<Basic and Advanced Text Summarisation Models/TextRank.ipynb>))
 - **Approach**: Graph-based ranking using sentence similarity
 - **Pros**: Automatic, unbiased, consistent results
 - **Cons**: Limited context understanding, may miss nuances
-- **Performance**: ROUGE F1: 0.586, BLEU: 0.694
+- **Performance**: ROUGE-1 F1: 0.269, unsmoothed BLEU: 0.000
 - **Use Case**: General purpose summarization
 
-#### **LexRank** ([`LexRank.ipynb`](<Basic to Advance Text Summarisation Models/LexRank.ipynb>))
+#### **LexRank** ([`LexRank.ipynb`](<Basic and Advanced Text Summarisation Models/LexRank.ipynb>))
 - **Approach**: Graph-based lexical centrality using cosine similarity
 - **Pros**: Handles complex texts, good performance on benchmarks
 - **Cons**: Limited coverage, extractive only
-- **Performance**: ROUGE F1: 0.357, BLEU: 0.651
+- **Performance**: ROUGE-1 F1: 0.400, unsmoothed BLEU: 0.000
 - **Use Case**: Long documents, multi-document summarization
 
-#### **Connected Dominating Set** ([`Connected_Dominating_Set.ipynb`](<Basic to Advance Text Summarisation Models/Connected_Dominating_Set.ipynb>))
+#### **Connected Dominating Set** ([`Connected_Dominating_Set.ipynb`](<Basic and Advanced Text Summarisation Models/Connected_Dominating_Set.ipynb>))
 - **Approach**: Graph theory-based sentence selection
 - **Pros**: Theoretical foundation, systematic approach
 - **Cons**: Computational complexity, may not capture semantics
@@ -126,11 +146,11 @@ These models represent text as graphs and use centrality algorithms:
 ### 3. Matrix Decomposition Models
 These models use mathematical techniques to identify important content:
 
-#### **LSA (Latent Semantic Analysis)** ([`LSA.ipynb`](<Basic to Advance Text Summarisation Models/LSA.ipynb>))
+#### **LSA (Latent Semantic Analysis)** ([`LSA.ipynb`](<Basic and Advanced Text Summarisation Models/LSA.ipynb>))
 - **Approach**: Singular Value Decomposition for semantic relationships
 - **Pros**: Captures semantic relationships, good for multi-document
 - **Cons**: Requires large training data, limited coverage
-- **Performance**: ROUGE F1: 0.602, BLEU: 0.869
+- **Performance**: ROUGE-1 F1: 0.140, unsmoothed BLEU: 0.000
 - **Use Case**: Multi-document summarization, semantic analysis
 
 #### **Sentence Ranking** (overlapping with the TF-IDF sentence-scoring notebook and retained in the original-source archive)
@@ -142,7 +162,7 @@ These models use mathematical techniques to identify important content:
 ### 4. Clustering-Based Models
 These models group similar content together:
 
-#### **K-Clustering** ([`K_Clustering.ipynb`](<Basic to Advance Text Summarisation Models/K_Clustering.ipynb>))
+#### **K-Clustering** ([`K_Clustering.ipynb`](<Basic and Advanced Text Summarisation Models/K_Clustering.ipynb>))
 - **Approach**: K-means clustering of sentences
 - **Pros**: Groups similar content, systematic approach
 - **Cons**: Requires parameter tuning, may lose context
@@ -157,13 +177,13 @@ These models group similar content together:
 ### 5. Advanced NLP Models
 These models use sophisticated NLP techniques:
 
-#### **Luhn's Model** ([`Luhn's_Model.ipynb`](<Basic to Advance Text Summarisation Models/Luhn's_Model.ipynb>))
+#### **Luhn's Model** ([`Luhn's_Model.ipynb`](<Basic and Advanced Text Summarisation Models/Luhn's_Model.ipynb>))
 - **Approach**: Classic statistical approach using word frequency
 - **Pros**: Historical significance, simple implementation
 - **Cons**: Basic approach, limited effectiveness
 - **Use Case**: Educational purposes, historical context
 
-#### **Compressive Document Summarization** ([`Compressive_Document_Summarization.ipynb`](<Basic to Advance Text Summarisation Models/Compressive_Document_Summarization.ipynb>))
+#### **Compressive Document Summarization** ([`Compressive_Document_Summarization.ipynb`](<Basic and Advanced Text Summarisation Models/Compressive_Document_Summarization.ipynb>))
 - **Approach**: Sentence compression and selection
 - **Pros**: More concise summaries, preserves key information
 - **Cons**: Complex implementation, may lose context
@@ -172,35 +192,35 @@ These models use sophisticated NLP techniques:
 ### 6. Transformer-Based Models
 These are state-of-the-art deep learning models:
 
-#### **BERT Extractive Summarization** ([`BERT.ipynb`](<Basic to Advance Text Summarisation Models/BERT.ipynb>))
+#### **BERT Extractive Summarization** ([`BERT.ipynb`](<Basic and Advanced Text Summarisation Models/BERT.ipynb>))
 - **Approach**: Pre-trained BERT model for sentence extraction
 - **Pros**: High accuracy, captures context well
 - **Cons**: Limited to extractive, depends on pre-trained models
-- **Performance**: ROUGE F1: 0.545, BLEU: 0.677
+- **Performance**: ROUGE-1 F1: 0.355, unsmoothed BLEU: 0.064
 - **Use Case**: Context-heavy documents
 
-#### **BART** ([`BART.ipynb`](<Basic to Advance Text Summarisation Models/BART.ipynb>))
+#### **BART** ([`BART.ipynb`](<Basic and Advanced Text Summarisation Models/BART.ipynb>))
 - **Approach**: Bidirectional and Auto-Regressive Transformer
 - **Pros**: State-of-the-art performance, high accuracy
 - **Cons**: Resource-intensive, large model size
-- **Performance**: ROUGE F1: 0.402, BLEU: 0.905
+- **Performance**: ROUGE-1 F1: 0.232, unsmoothed BLEU: 0.000
 - **Use Case**: High-quality abstractive summaries
 
-#### **T5** ([`T5.ipynb`](<Basic to Advance Text Summarisation Models/T5.ipynb>))
+#### **T5** ([`T5.ipynb`](<Basic and Advanced Text Summarisation Models/T5.ipynb>))
 - **Approach**: Text-To-Text Transfer Transformer
 - **Pros**: High accuracy, customizable, multilingual
 - **Cons**: Resource-intensive, technical complexity
-- **Performance**: ROUGE F1: 0.573, BLEU: 0.683
+- **Performance**: ROUGE-1 F1: 0.268, unsmoothed BLEU: 0.000
 - **Use Case**: Production systems, multilingual applications
 
-#### **GPT-2** ([`GPT_2.ipynb`](<Basic to Advance Text Summarisation Models/GPT_2.ipynb>))
+#### **GPT-2** ([`GPT_2.ipynb`](<Basic and Advanced Text Summarisation Models/GPT_2.ipynb>))
 - **Approach**: Generative Pre-trained Transformer 2
 - **Pros**: Large language model, contextual understanding
 - **Cons**: Lack of control, high computational costs
-- **Performance**: ROUGE F1: 0.797, BLEU: 0.423
+- **Performance**: ROUGE-1 F1: 0.301, unsmoothed BLEU: 0.039
 - **Use Case**: Research, creative summarization
 
-#### **DistilBART** ([`Distilbart.ipynb`](<Basic to Advance Text Summarisation Models/Distilbart.ipynb>))
+#### **DistilBART** ([`Distilbart.ipynb`](<Basic and Advanced Text Summarisation Models/Distilbart.ipynb>))
 - **Approach**: Distilled version of BART for efficiency
 - **Pros**: Faster inference, smaller model size
 - **Cons**: Slightly lower accuracy than full BART
@@ -214,13 +234,13 @@ These are state-of-the-art deep learning models:
 - **Cons**: May miss specific details
 - **Use Case**: Topic extraction, document similarity
 
-#### **SUMY** ([`SUMY.ipynb`](<Basic to Advance Text Summarisation Models/SUMY.ipynb>))
+#### **SUMY** ([`SUMY.ipynb`](<Basic and Advanced Text Summarisation Models/SUMY.ipynb>))
 - **Approach**: Multi-document summarization toolkit
 - **Pros**: Specialized for multi-document scenarios
 - **Cons**: Limited to specific use cases
 - **Use Case**: Multi-document summarization
 
-#### **AI Transformer Pipeline** ([`AI_Transformer_pipeline.ipynb`](<Basic to Advance Text Summarisation Models/AI_Transformer_pipeline.ipynb>))
+#### **AI Transformer Pipeline** ([`AI_Transformer_pipeline.ipynb`](<Basic and Advanced Text Summarisation Models/AI_Transformer_pipeline.ipynb>))
 - **Approach**: Custom transformer-based pipeline
 - **Pros**: Customizable architecture, modern approach
 - **Cons**: Complex implementation, requires expertise
@@ -228,24 +248,24 @@ These are state-of-the-art deep learning models:
 
 ## 🚀 Advanced Architecture Models
 
-### Pegasus Models (`Models Used in Proposed Architecture/`)
+### Pegasus Models (`Pegasus Checkpoint Models/`)
 
 The repository includes **12 different Pegasus model implementations**:
 
-#### **Single Document Pegasus** ([`Pegasus_XSum.ipynb`](<Models Used in Proposed Architecture/Pegasus_XSum.ipynb>))
+#### **Single Document Pegasus** ([`Pegasus_XSum.ipynb`](<Pegasus Checkpoint Models/Pegasus_XSum.ipynb>))
 - **Approach**: Single document abstractive summarization
 - **Pros**: High-quality summaries, generalization capability
 - **Cons**: Large computational requirements, limited control
-- **Performance**: ROUGE F1: 0.086, BLEU: 0
+- **Performance**: ROUGE-1 F1: 0.202, BLEU-4: 0.012
 - **Use Case**: Single document abstractive summarization
 
-#### **Multi-Document Pegasus** ([`Pegasus_MultiNews.ipynb`](<Models Used in Proposed Architecture/Pegasus_MultiNews.ipynb>))
+#### **Multi-Document Pegasus** ([`Pegasus_MultiNews.ipynb`](<Pegasus Checkpoint Models/Pegasus_MultiNews.ipynb>))
 - **Approach**: Multi-document summarization
 - **Pros**: Handles multiple documents, comprehensive coverage
 - **Cons**: Complex processing, resource-intensive
 - **Use Case**: Multi-document scenarios
 
-#### **All 12 Pegasus Models** ([12 checkpoint-specific notebooks](<Models Used in Proposed Architecture/>))
+#### **All 12 Pegasus Models** ([12 checkpoint-specific notebooks](<Pegasus Checkpoint Models/>))
 Includes implementations of:
 - **Pegasus-XSUM**: BBC News summarization
 - **Pegasus-CNN/DailyMail**: News article summarization
@@ -257,21 +277,20 @@ Includes implementations of:
 - **Pegasus-BigPatent**: Patent document summarization
 - And more specialized variants
 
-#### **Graph-Based Summary** ([`Graph_Based_Summary.ipynb`](<Basic to Advance Text Summarisation Models/Graph_Based_Summary.ipynb>))
+#### **Graph-Based Summary** ([`Graph_Based_Summary.ipynb`](<Basic and Advanced Text Summarisation Models/Graph_Based_Summary.ipynb>))
 - **Approach**: Novel graph-based approach using LCS, TF-IDF, and matrix methods
 - **Pros**: Combines multiple techniques, systematic approach
 - **Cons**: Complex implementation, computational expense
-- **Performance**: ROUGE F1: 0.417, BLEU: 0.901
+- **Performance**: ROUGE-1 F1: 0.321, BLEU-4: 0.081
 - **Use Case**: Research, novel approaches
 
 ## 📈 Performance Analysis
 
 ### Key Insights from Results:
 
-1. **Best Overall Performance**: GPT-2 achieved the highest ROUGE F1 score (0.797)
-2. **Best BLEU Score**: BART achieved the highest BLEU score (0.905)
-3. **Most Balanced**: T5 shows good balance between ROUGE and BLEU scores
-4. **Efficiency vs Accuracy**: DistilBART offers a good trade-off for real-time applications
+1. **Highest Basic/Advanced ROUGE-1 F1 in this run**: LexRank scored 0.400.
+2. **Highest Basic/Advanced notebook BLEU in this run**: K-Clustering scored 0.861; BLEU implementations vary between notebooks.
+3. **Pegasus results**: Use the separate shared-evaluator table above; do not compare its smoothed BLEU-4 directly with unsmoothed notebook BLEU.
 
 ### Performance Trends:
 - **Transformer models** generally outperform traditional methods
@@ -283,24 +302,16 @@ Includes implementations of:
 
 | Collection | Tabular comparison |
 |---|---|
-| Existing model notebooks | See the updated shared-article results table below. |
-| Pegasus checkpoints | See the 12-checkpoint score table below. |
+| Basic and advanced notebooks | See the model comparison table above. |
+| Pegasus checkpoints | See the dedicated Pegasus evaluation table above. |
 
-The original comparison images were removed as requested. Their replacement is the updated results table in the added section below.
+The original comparison images were removed as requested. Their score information is preserved in the tables above and the original-source archive.
 
 ## 🛠️ Technical Requirements
 
 ### Core Dependencies
 ```bash
-pip install transformers
-pip install torch
-pip install nltk
-pip install rouge
-pip install scikit-learn
-pip install numpy
-pip install pandas
-pip install networkx
-pip install sentencepiece
+python -m pip install -r requirements-models.txt
 ```
 
 ### Additional Libraries
@@ -313,7 +324,36 @@ pip install sentencepiece
 - **RAM**: Minimum 8GB, Recommended 16GB+
 - **GPU**: Optional but recommended for transformer models
 - **Storage**: At least 5GB free space for models
-- **Python**: 3.7 or higher
+- **Python**: 3.9 or higher
+
+## How to Install All Models
+
+Use Python 3.9 or newer. `requirements-models.txt` installs the core notebook dependencies plus PyTorch, Transformers, SentencePiece, the BERT summarizer, and protobuf.
+
+### Windows PowerShell
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements-models.txt
+.\.venv\Scripts\python.exe -m ipykernel install --prefix .venv --name text-summarization-models --display-name "Python (Text Summarization Models)"
+.\.venv\Scripts\python.exe run_all_notebooks.py
+```
+
+### macOS or Linux
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements-models.txt
+python -m ipykernel install --prefix .venv --name text-summarization-models --display-name "Python (Text Summarization Models)"
+python run_all_notebooks.py
+```
+
+The runner registers the project kernel automatically if it is missing. Each pretrained notebook downloads its checkpoint through Transformers on first use. Hugging Face files are cached under `.model_cache/`; set `HF_HOME` to use another cache location. NLTK resources are stored under `.nltk_data/` and downloaded by the notebooks as needed. Missing cache files are downloaded again automatically.
+
+No model weights are included in Git. Check each upstream model card and license for usage terms; weights differ in size and license, and the local Hugging Face cache is intentionally ignored by `.gitignore`.
 
 ## 📚 Educational Value
 
@@ -372,7 +412,7 @@ This repository serves as a comprehensive learning resource for:
 ## 🔬 Research Contributions
 
 This project includes:
-- **31 different summarization approaches**
+- **30 curated notebooks: 18 basic/advanced methods and 12 Pegasus checkpoints**
 - **Comprehensive performance evaluation**
 - **Educational implementations**
 - **Research paper references**
@@ -454,18 +494,18 @@ For questions, issues, or contributions:
 ### Version Information
 - **Last Updated**: October 30, 2026
 - **Model inventory**: 31 in the original README; 30 notebooks in the current curated layout
-- **Python Version**: 3.7+
+- **Python Version**: 3.9+
 - **License**: Educational Use
 
 
 ## Shared Article, Notebook Layout, and Execution (Added October 30, 2026)
 
-All notebooks use the shared global article in `article.txt` and the target summary in `reference_summary.txt`. The article is a paraphrased, attributed digest of NOAA NCEI's [global 2025 climate assessment](https://www.ncei.noaa.gov/news/global-climate-202513). Shared preprocessing and ROUGE/BLEU evaluation helpers are in `summarization_utils.py`.
+All notebooks use the shared global article in `article.txt` and target summary in `reference_summary.txt`. The article is a paraphrased, attributed digest of NOAA NCEI's [global 2025 climate assessment](https://www.ncei.noaa.gov/news/global-climate-202513). Shared preprocessing and evaluation helpers are in `summarization_utils.py`.
 
-The notebook layout is **18 + 12 = 30**: 18 notebooks in `Basic to Advance Text Summarisation Models/` and 12 checkpoint-specific Pegasus notebooks in `Models Used in Proposed Architecture/`. The complete original notebook and README sources (with the obsolete score images omitted) are preserved in `original_source_backup.zip`; the prior generated 30-notebook state is preserved in `current_generated_snapshot.zip`.
+The notebook layout is **18 + 12 = 30**: 18 notebooks in `Basic and Advanced Text Summarisation Models/` and 12 checkpoint-specific Pegasus notebooks in `Pegasus Checkpoint Models/`. The original notebook and README sources are preserved in `original_source_backup.zip`; the prior generated notebook state is preserved in `current_generated_snapshot.zip`.
 
-Install the dependencies in `requirements.txt` and `requirements-models.txt`, then run `python run_all_notebooks.py` to execute all 30 notebooks in the local Jupyter kernel and save their outputs. After Smart App Control was turned off, PyTorch 2.15.0+cpu loaded successfully. All 30 notebooks completed without cell errors, and all six transformer notebooks plus all 12 Pegasus checkpoints generated summaries. The Pegasus rows above show current shared-article ROUGE-1 F1 and BLEU-4, followed by the preserved historical values.
+The latest full run executed all 30 notebooks with no cell errors, inference fallbacks, or missing metrics. Results and metric-method labels are saved in `evaluation_results.csv`.
 
 ### Updated run results
 
-The non-Pegasus scores retained from the original comparison are historical. Original Pegasus scores used the COVID-19 sample and compared against the source article, not a human-written reference, so they are not directly comparable with the new shared-article metrics. Current Pegasus scores were generated against `reference_summary.txt` with the shared NOAA article. The Gigaword notebook now truncates input to its checkpoint’s position limit; `protobuf` is included in `requirements-models.txt` for Pegasus tokenization.
+The Pegasus table separates current shared-article metrics from the original notebook scores. The original scores used the COVID-19 sample and source-article comparison, so they are not directly comparable. Gigaword input is capped to the checkpoint's positional limit, and `protobuf` is included for Pegasus tokenization.
